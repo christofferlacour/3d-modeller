@@ -6,19 +6,20 @@
   <title>Modulær skiltsøjle</title>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <style>
-    :root { color-scheme: dark; }
+    :root { color-scheme: dark; --scene-color: hsl(350 77% 40%); }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
     body {
       display: grid;
       place-items: center;
       overflow: hidden;
-      background: #1d2424;
+      background: var(--scene-color);
       font-family: system-ui, sans-serif;
     }
     model-viewer {
-      width: min(100vw, 1400px);
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      min-height: 100dvh;
       background: var(--scene-color);
       --poster-color: var(--scene-color);
     }
@@ -33,6 +34,18 @@
       border: 1px solid rgb(255 255 255 / 35%);
       border-radius: 6px;
       background: rgb(20 27 27 / 78%);
+    }
+    .fullscreen {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      padding: .6rem .75rem;
+      border: 1px solid rgb(255 255 255 / 35%);
+      border-radius: 6px;
+      color: #fff;
+      background: rgb(20 27 27 / 78%);
+      cursor: pointer;
+      font: inherit;
     }
     .swatch, .picker {
       width: 1.8rem;
@@ -78,11 +91,13 @@
       <input id="color-picker" type="color" value="#b51d3a">
     </label>
   </div>
+  <button class="fullscreen" id="fullscreen" type="button">Fullscreen</button>
   <div class="hint">Drag to rotate · Scroll to zoom</div>
   <script>
     const viewer = document.querySelector('model-viewer');
     const root = document.documentElement;
     const picker = document.querySelector('#color-picker');
+    const fullscreenButton = document.querySelector('#fullscreen');
 
     function setSceneColor(color) {
       root.style.setProperty('--scene-color', color);
@@ -93,6 +108,16 @@
       button.addEventListener('click', () => setSceneColor(button.dataset.color));
     });
     picker.addEventListener('input', () => setSceneColor(picker.value));
+    fullscreenButton.addEventListener('click', () => {
+      const target = document.querySelector('model-viewer');
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else if (target.requestFullscreen) {
+        target.requestFullscreen();
+      } else {
+        document.documentElement.requestFullscreen();
+      }
+    });
     setSceneColor('hsl(350 77% 40%)');
   </script>
 </body>
