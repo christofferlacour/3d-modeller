@@ -6,7 +6,7 @@
   <title>Modulær skiltsøjle</title>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <style>
-    :root { color-scheme: dark; --scene-color: hsl(350 77% 40%); }
+    :root { color-scheme: dark; --scene-color: #cccccc; }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
     body {
@@ -34,6 +34,8 @@
       border: 1px solid rgb(255 255 255 / 35%);
       border-radius: 6px;
       background: rgb(20 27 27 / 78%);
+      opacity: 0;
+      transition: opacity .2s ease;
     }
     .fullscreen {
       position: fixed;
@@ -46,6 +48,8 @@
       background: rgb(20 27 27 / 78%);
       cursor: pointer;
       font: inherit;
+      opacity: 0;
+      transition: opacity .2s ease;
     }
     .swatch, .picker {
       width: 1.8rem;
@@ -68,7 +72,14 @@
       background: rgb(20 27 27 / 78%);
       font-size: .85rem;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s ease;
     }
+    body:hover .controls,
+    body:hover .fullscreen,
+    body:hover .hint,
+    .controls:hover,
+    .fullscreen:hover { opacity: 1; }
   </style>
 </head>
 <body>
@@ -84,11 +95,11 @@
     loading="eager">
   </model-viewer>
   <div class="controls" aria-label="Background color">
-    <button class="swatch" type="button" data-color="hsl(350 77% 40%)" style="background: hsl(350 77% 40%)" aria-label="Red background" title="Red"></button>
+    <button class="swatch" type="button" data-color="#cccccc" style="background: #cccccc" aria-label="Light gray background" title="Light gray"></button>
     <button class="swatch" type="button" data-color="#eef1f2" style="background: #eef1f2" aria-label="Light gray background" title="Light gray"></button>
     <button class="swatch" type="button" data-color="#20292b" style="background: #20292b" aria-label="Dark background" title="Dark"></button>
     <label class="picker" aria-label="Choose a background color" title="Choose a color">
-      <input id="color-picker" type="color" value="#b51d3a">
+      <input id="color-picker" type="color" value="#cccccc">
     </label>
   </div>
   <button class="fullscreen" id="fullscreen" type="button">Fullscreen</button>
@@ -118,7 +129,7 @@
         document.documentElement.requestFullscreen();
       }
     });
-    setSceneColor('hsl(350 77% 40%)');
+    setSceneColor('#cccccc');
   </script>
 </body>
 </html>
