@@ -51,16 +51,23 @@
       opacity: 0;
       transition: opacity .2s ease;
     }
-    .swatch, .picker {
+    .picker {
       width: 1.8rem;
       height: 1.8rem;
       padding: 0;
       border: 2px solid rgb(255 255 255 / 75%);
       border-radius: 50%;
       cursor: pointer;
+      background: var(--scene-color);
     }
     .picker { overflow: hidden; }
-    .picker input { width: 3rem; height: 3rem; margin: -.6rem; cursor: pointer; }
+    .picker input {
+      width: 3rem;
+      height: 3rem;
+      margin: -.6rem;
+      cursor: pointer;
+      opacity: 0;
+    }
     .hint {
       position: fixed;
       left: 1rem;
@@ -95,10 +102,7 @@
     loading="eager">
   </model-viewer>
   <div class="controls" aria-label="Background color">
-    <button class="swatch" type="button" data-color="#cccccc" style="background: #cccccc" aria-label="Light gray background" title="Light gray"></button>
-    <button class="swatch" type="button" data-color="#eef1f2" style="background: #eef1f2" aria-label="Light gray background" title="Light gray"></button>
-    <button class="swatch" type="button" data-color="#20292b" style="background: #20292b" aria-label="Dark background" title="Dark"></button>
-    <label class="picker" aria-label="Choose a background color" title="Choose a color">
+    <label class="picker" aria-label="Choose a background color" title="Change background color">
       <input id="color-picker" type="color" value="#cccccc">
     </label>
   </div>
@@ -115,10 +119,10 @@
       picker.value = color;
     }
 
-    document.querySelectorAll('[data-color]').forEach((button) => {
-      button.addEventListener('click', () => setSceneColor(button.dataset.color));
+    picker.addEventListener('input', () => {
+      setSceneColor(picker.value);
+      document.querySelector('.picker').style.background = picker.value;
     });
-    picker.addEventListener('input', () => setSceneColor(picker.value));
     fullscreenButton.addEventListener('click', () => {
       const target = document.querySelector('model-viewer');
       if (document.fullscreenElement) {
