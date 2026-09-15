@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modulær skiltsøjle</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: #1d2424;
+      font-family: system-ui, sans-serif;
+    }
+    model-viewer {
+      width: min(100vw, 1400px);
+      height: 100vh;
+      background: #d9d4c8;
+      --poster-color: #d9d4c8;
+    }
+    .hint {
+      position: fixed;
+      left: 1rem;
+      bottom: 1rem;
+      padding: .55rem .8rem;
+      border: 1px solid rgb(255 255 255 / 35%);
+      border-radius: 6px;
+      color: #fff;
+      background: rgb(20 27 27 / 78%);
+      font-size: .85rem;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <model-viewer
+    src="Modul%C3%A6r%20skilts%C3%B8jle.glb"
+    alt="Interactive 3D model of a modular sign pillar"
+    camera-controls
+    touch-action="pan-y"
+    shadow-intensity="1"
+    exposure="1"
+    environment-image="neutral"
+    interaction-prompt="auto"
+    loading="eager">
+  </model-viewer>
+  <div class="hint">Drag to rotate · Scroll to zoom</div>
+</body>
+</html>
