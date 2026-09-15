@@ -19,9 +19,31 @@
     model-viewer {
       width: min(100vw, 1400px);
       height: 100vh;
-      background: #d9d4c8;
-      --poster-color: #d9d4c8;
+      background: var(--scene-color);
+      --poster-color: var(--scene-color);
     }
+    .controls {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .5rem;
+      border: 1px solid rgb(255 255 255 / 35%);
+      border-radius: 6px;
+      background: rgb(20 27 27 / 78%);
+    }
+    .swatch, .picker {
+      width: 1.8rem;
+      height: 1.8rem;
+      padding: 0;
+      border: 2px solid rgb(255 255 255 / 75%);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .picker { overflow: hidden; }
+    .picker input { width: 3rem; height: 3rem; margin: -.6rem; cursor: pointer; }
     .hint {
       position: fixed;
       left: 1rem;
@@ -48,6 +70,30 @@
     interaction-prompt="auto"
     loading="eager">
   </model-viewer>
+  <div class="controls" aria-label="Background color">
+    <button class="swatch" type="button" data-color="#d9d4c8" style="background: #d9d4c8" aria-label="Warm stone background" title="Warm stone"></button>
+    <button class="swatch" type="button" data-color="#eef1f2" style="background: #eef1f2" aria-label="Light gray background" title="Light gray"></button>
+    <button class="swatch" type="button" data-color="#20292b" style="background: #20292b" aria-label="Dark background" title="Dark"></button>
+    <label class="picker" aria-label="Choose a background color" title="Choose a color">
+      <input id="color-picker" type="color" value="#d9d4c8">
+    </label>
+  </div>
   <div class="hint">Drag to rotate · Scroll to zoom</div>
+  <script>
+    const viewer = document.querySelector('model-viewer');
+    const root = document.documentElement;
+    const picker = document.querySelector('#color-picker');
+
+    function setSceneColor(color) {
+      root.style.setProperty('--scene-color', color);
+      picker.value = color;
+    }
+
+    document.querySelectorAll('[data-color]').forEach((button) => {
+      button.addEventListener('click', () => setSceneColor(button.dataset.color));
+    });
+    picker.addEventListener('input', () => setSceneColor(picker.value));
+    setSceneColor('#d9d4c8');
+  </script>
 </body>
 </html>
